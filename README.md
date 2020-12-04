@@ -5,6 +5,14 @@ Ported from the original [MXNet implementation](https://github.com/msracver/Defo
 
 Refer to [mmdetection branch](https://github.com/chengdazhi/Deformable-Convolution-V2-PyTorch/tree/mmdetection) in this repo for a complete framework. Results of DCNv2 based on mmdetection code base can be found at [model zoo](https://github.com/chengdazhi/Deformable-Convolution-V2-PyTorch/blob/mmdetection/MODEL_ZOO.md#deformable-conv-v2). Many thanks to [mmdetection](https://github.com/open-mmlab/mmdetection) for their strong and clean framework.
 
+## Added by Rui: im2col
+
+Compile by
+
+```
+pip uninstall DCN && rm -rf build/ && rm -rf DCN.egg-info/ && rm -rf dist/ && sh make.sh`
+```
+
 ## Build
 
 ```

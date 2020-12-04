@@ -54,3 +54,47 @@ class DeformConvFunction(Function):
 
         return grad_input, grad_offset, grad_weight, grad_bias,\
             None, None, None, None, None, None
+
+
+class DeformIm2colFunction(Function):
+    @staticmethod
+    def forward(ctx, input, offset, 
+                kernel_size, stride, padding, dilation, group=1, deformable_groups=1, im2col_step=1):
+        ctx.stride = _pair(stride)
+        ctx.padding = _pair(padding)
+        ctx.dilation = _pair(dilation)
+        # ctx.kernel_size = _pair(weight.shape[2:4])
+        ctx.kernel_size = _pair(kernel_size)
+        ctx.group = group
+        ctx.deformable_groups = deformable_groups
+        ctx.im2col_step = im2col_step
+        output = DCN.deform_im2col_forward(input, 
+                                         offset,
+                                         ctx.kernel_size[0], ctx.kernel_size[1],
+                                         ctx.stride[0], ctx.stride[1],
+                                         ctx.padding[0], ctx.padding[1],
+                                         ctx.dilation[0], ctx.dilation[1],
+                                         ctx.group,
+                                         ctx.deformable_groups,
+                                         ctx.im2col_step)
+        ctx.save_for_backward(input, offset)
+        return output
+
+    @staticmethod
+    @once_differentiable
+    def backward(ctx, grad_output):
+        input, offset = ctx.saved_tensors
+        grad_input, grad_offset = \
+            DCN.deform_im2col_backward(input, 
+                                     offset,
+                                     grad_output,
+                                     ctx.kernel_size[0], ctx.kernel_size[1],
+                                     ctx.stride[0], ctx.stride[1],
+                                     ctx.padding[0], ctx.padding[1],
+                                     ctx.dilation[0], ctx.dilation[1],
+                                     ctx.group,
+                                     ctx.deformable_groups,
+                                     ctx.im2col_step)
+
+        return grad_input, grad_offset, \
+            None, None, None, None, None, None
