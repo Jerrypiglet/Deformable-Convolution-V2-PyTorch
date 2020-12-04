@@ -1,14 +1,14 @@
 # Deformable im2col (unfold) and Deformable-ConvNets-V2 in PyTorch 1.6.X
 
 ## What's added
-**[Added by Rui]** Wrapped the deformable version of im2col (a.k.s unfold operation) as an independent function and operation, using cuda code from the original repo. Tested with Torch 1.6.0.
+**[Added by Rui]** Wrapped the deformable version of im2col (a.k.s [unfold](https://pytorch.org/docs/stable/generated/torch.nn.Unfold.html) operation) as an independent function and operation, using cuda code from the original repo. Tested with Torch 1.6.0.
 
 Compile by
 
 ```
 pip uninstall DCN && rm -rf build/ && rm -rf DCN.egg-info/ && rm -rf dist/ && sh make.sh
 ```
-And see `debug_conv_implementation.ipynb` for demo and tests.
+And see `debug_conv_implementation.ipynb` for usage demo and tests.
 
 ## From original repo
 This repo is an implementation of [Deformable Convolution V2](https://arxiv.org/abs/1811.11168).
