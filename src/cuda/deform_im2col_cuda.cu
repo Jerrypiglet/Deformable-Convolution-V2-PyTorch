@@ -150,6 +150,8 @@ std::vector<at::Tensor> deform_im2col_cuda_backward(const at::Tensor &input,
 
     AT_ASSERTM(input.is_contiguous(), "input tensor has to be contiguous");
     // AT_ASSERTM(weight.is_contiguous(), "weight tensor has to be contiguous");
+    AT_ASSERTM(offset.is_contiguous(), "input tensor has to be contiguous");
+    AT_ASSERTM(grad_output.is_contiguous(), "input tensor has to be contiguous");
 
     AT_ASSERTM(input.type().is_cuda(), "input must be a CUDA tensor");
     // AT_ASSERTM(weight.type().is_cuda(), "weight must be a CUDA tensor");

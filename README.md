@@ -8,7 +8,8 @@ Compile by
 ```
 pip uninstall DCN && rm -rf build/ && rm -rf DCN.egg-info/ && rm -rf dist/ && sh make.sh
 ```
-And see `debug_conv_implementation.ipynb` for usage demo and tests.
+And see `debug_conv_implementation.ipynb` for usage 
+demo and tests.
 
 ## From original repo
 This repo is an implementation of [Deformable Convolution V2](https://arxiv.org/abs/1811.11168).

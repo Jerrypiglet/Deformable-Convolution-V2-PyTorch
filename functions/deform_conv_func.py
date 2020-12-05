@@ -68,8 +68,8 @@ class DeformIm2colFunction(Function):
         ctx.group = group
         ctx.deformable_groups = deformable_groups
         ctx.im2col_step = im2col_step
-        output = DCN.deform_im2col_forward(input, 
-                                         offset,
+        output = DCN.deform_im2col_forward(input.contiguous(), 
+                                         offset.contiguous(),
                                          ctx.kernel_size[0], ctx.kernel_size[1],
                                          ctx.stride[0], ctx.stride[1],
                                          ctx.padding[0], ctx.padding[1],
@@ -84,10 +84,13 @@ class DeformIm2colFunction(Function):
     @once_differentiable
     def backward(ctx, grad_output):
         input, offset = ctx.saved_tensors
+        # print('===grad_output', grad_output.shape, grad_output)
+        # print('===input', input.shape, input)
+        # print('===offset', offset.shape, offset)
         grad_input, grad_offset = \
-            DCN.deform_im2col_backward(input, 
-                                     offset,
-                                     grad_output,
+            DCN.deform_im2col_backward(input.contiguous(), 
+                                     offset.contiguous(),
+                                     grad_output.contiguous(),
                                      ctx.kernel_size[0], ctx.kernel_size[1],
                                      ctx.stride[0], ctx.stride[1],
                                      ctx.padding[0], ctx.padding[1],
